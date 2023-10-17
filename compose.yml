@@ -1,0 +1,45 @@
+version: "3.8"
+services:
+  database:
+    image: mongo:7
+    ports:
+      - 45678:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123456
+    volumes:
+      - ./database/data:/data/db
+      - ./database/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh database:27017 --quiet
+      start_period: 10s
+      interval: 3s
+      timeout: 10s
+      retries: 3
+  app:
+    build:
+      context: ./
+      target: base
+    command: sh -c "yarn run dev"
+    environment:
+      APP_PORT: ${APP_PORT}
+      MONGODB_URL: ${MONGODB_URL}
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    healthcheck:
+      test: wget -qO- http://app:$APP_PORT/health || exit 1
+      start_period: 5s
+      interval: 5s
+      timeout: 3s
+      retries: 3
+    depends_on:
+      database:
+        condition: service_healthy
+        restart: true
+    x-develop:
+      watch:
+        - action: sync
+          path: ./src
+          target: /url-shortener/src
+        - action: rebuild
+          path: package.json
