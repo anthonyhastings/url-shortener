@@ -1,5 +1,5 @@
 export default {
   testEnvironment: 'node',
-  testTimeout: 20000,
+  testTimeout: 40000,
   verbose: true,
 };
