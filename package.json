@@ -11,6 +11,8 @@
   "scripts": {
     "dev": "nodemon src/index.mjs",
     "dev:native": "node --watch src/index.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --list-different .",
     "start": "node src/index.mjs",
     "test": "DEBUG=testcontainers* node --experimental-vm-modules $(yarn bin jest) --runInBand"
   },

@@ -23,5 +23,8 @@ jobs:
       - name: Install application dependencies
         run: yarn install --frozen-lockfile --prefer-offline
 
+      - name: Check formatting
+        run: yarn format:check
+
       - name: Run integration tests
         run: yarn test
