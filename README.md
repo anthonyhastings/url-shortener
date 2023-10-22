@@ -47,7 +47,7 @@ docker compose alpha watch
 - [`HEALTHCHECK`](https://docs.docker.com/engine/reference/builder/#healthcheck)
 - [`healthcheck`](https://docs.docker.com/compose/compose-file/05-services/#healthcheck)
 - [`depends_on`](https://docs.docker.com/compose/compose-file/05-services/#depends_on)
-- [`Control startup and shutdown order in Compose`](https://docs.docker.com/compose/startup-order/)
+- [Control startup and shutdown order in Compose](https://docs.docker.com/compose/startup-order/)
 
 ### Compose Watch
 
