@@ -36,7 +36,7 @@ services:
       database:
         condition: service_healthy
         restart: true
-    x-develop:
+    develop:
       watch:
         - action: sync
           path: ./src
