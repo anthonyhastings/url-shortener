@@ -37,7 +37,7 @@ docker inspect --format "{{json .State.Health }}" url-shortener-database-1 | jq
 Then in another terminal, start watching for source file changes to have them replicated into running containers:
 
 ```sh
-docker compose alpha watch
+docker compose watch
 ```
 
 ## Further Information
