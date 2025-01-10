@@ -1,6 +1,7 @@
 {
   "name": "url-shortener",
   "version": "1.0.0",
+  "packageManager": "pnpm@9.15.3",
   "description": "An example of a URL shortening service",
   "author": "Anthony Hastings <ar.hastings@gmail.com> (https://antwan1986.github.io/)",
   "license": "MIT",
@@ -14,7 +15,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --list-different .",
     "start": "node src/index.mjs",
-    "test": "DEBUG=testcontainers* node --experimental-vm-modules $(yarn bin jest) --runInBand"
+    "test": "DEBUG=testcontainers* NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" pnpx jest --runInBand"
   },
   "dependencies": {
     "dotenv": "^16.3.1",

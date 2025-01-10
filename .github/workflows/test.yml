@@ -18,13 +18,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
-          cache: 'yarn'
+          cache: 'pnpm'
 
       - name: Install application dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: pnpm install --prefer-offline --frozen-lockfile
 
       - name: Check formatting
-        run: yarn format:check
+        run: pnpm format:check
 
       - name: Run integration tests
-        run: yarn test
+        run: pnpm test

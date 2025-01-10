@@ -6,10 +6,10 @@ USER node
 
 WORKDIR /url-shortener
 
-COPY --chown=node ./package.json ./yarn.lock ./
+COPY --chown=node ./package.json ./pnpm-lock.yaml ./
 
-RUN yarn install --frozen-lockfile && yarn cache clean
+RUN pnpm install --prefer-offline
 
 COPY --chown=node . ./
 
-CMD yarn start
+CMD pnpm start

@@ -6,4 +6,4 @@
 !.prettierignore
 !.prettierrc
 !package.json
-!yarn.lock
+!pnpm-lock.yaml
