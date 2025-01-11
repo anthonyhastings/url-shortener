@@ -24,7 +24,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@testcontainers/mongodb": "^10.2.1",
+    "@testcontainers/mongodb": "^10.16.0",
     "prettier": "^3.0.3",
     "supertest": "^6.3.3",
     "vitest": "^2.1.8"

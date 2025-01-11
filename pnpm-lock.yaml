@@ -25,7 +25,7 @@ importers:
         version: 3.24.1
     devDependencies:
       '@testcontainers/mongodb':
-        specifier: ^10.2.1
+        specifier: ^10.16.0
         version: 10.16.0
       prettier:
         specifier: ^3.0.3
