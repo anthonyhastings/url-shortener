@@ -1,12 +1,11 @@
 import path from 'node:path';
-import { jest } from '@jest/globals';
 import { MongoDBContainer } from '@testcontainers/mongodb';
 import mongoose from 'mongoose';
 import supertest from 'supertest';
 
-jest.unstable_mockModule('nanoid', async () => {
+vi.mock('nanoid', () => {
   return {
-    nanoid: jest.fn(() => 'fake-id'),
+    nanoid: vi.fn(() => 'fake-id'),
   };
 });
 

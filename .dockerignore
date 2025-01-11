@@ -7,3 +7,4 @@
 !.prettierrc
 !package.json
 !pnpm-lock.yaml
+!vitest.config.mjs
