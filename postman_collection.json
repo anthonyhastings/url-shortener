@@ -1,0 +1,541 @@
+{
+  "info": {
+    "name": "URL Shortener",
+    "description": "A collection for testing the URL Shortener API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:54321/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "54321",
+          "path": ["health"]
+        }
+      },
+      "response": [
+        {
+          "name": "200",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:54321/health",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "54321",
+              "path": ["health"]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "15"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"f-VaSQ4oDUiZblZNAEkkN+sX+q3Sg\""
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 12 Jan 2025 20:49:01 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"status\": \"ok\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Create Shortened URL",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"target\": \"https://www.example.com/\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:54321/links",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "54321",
+          "path": ["links"]
+        }
+      },
+      "response": [
+        {
+          "name": "201",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"target\": \"https://www.twitch.tv/\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:54321/links",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "54321",
+              "path": ["links"]
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "138"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"8a-O19WZeboG9ED/rno+GlKlLWwJEE\""
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 12 Jan 2025 21:47:03 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"success\": true,\n    \"data\": {\n        \"shortId\": \"9DPwWrbLnDZC56fwvdJlDFIpP\",\n        \"target\": \"https://www.twitch.tv/\",\n        \"_id\": \"678438571bed54ddb5d58708\",\n        \"__v\": 0\n    }\n}"
+        },
+        {
+          "name": "400",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"target\": \"erroneous-url\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:54321/links",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "54321",
+              "path": ["links"]
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "32"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"20-hBMu+sXNJ1GT+V4ctRULrJ5EfcU\""
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 12 Jan 2025 21:43:35 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"success\": false,\n    \"error\": \"Invalid target\"\n}"
+        },
+        {
+          "name": "409",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"target\": \"https://www.example.com/\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:54321/links",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "54321",
+              "path": ["links"]
+            }
+          },
+          "status": "Conflict",
+          "code": 409,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "51"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"33-VeJ+adFQWn6gl9kT0f24vk9/xeE\""
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 12 Jan 2025 21:45:12 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"success\": false,\n    \"error\": \"Short Id already exists\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Get Shortened URL",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:54321/links/:shortId",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "54321",
+          "path": ["links", ":shortId"],
+          "variable": [
+            {
+              "key": "shortId",
+              "value": "Zx8lP5bWMhEgnvH"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "200",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:54321/links/:shortId",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "54321",
+              "path": ["links", ":shortId"],
+              "variable": [
+                {
+                  "key": "shortId",
+                  "value": "Zx8lP5bWMhEgnvH"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "122"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"7a-SWrRe2qTVQ5DrkTgPw57woLIJ7s\""
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 12 Jan 2025 21:01:18 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"success\": true,\n    \"data\": {\n        \"_id\": \"6783020ab6bc3bbf46fc0423\",\n        \"shortId\": \"Zx8lP5bWMhEgnvH\",\n        \"target\": \"https://www.youtube.com/\"\n    }\n}"
+        },
+        {
+          "name": "404",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:54321/links/:shortId",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "54321",
+              "path": ["links", ":shortId"],
+              "variable": [
+                {
+                  "key": "shortId",
+                  "value": "non-existent-id"
+                }
+              ]
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "44"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"2c-COXrBsUC7ZS13v8rjky4tG38o7c\""
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 12 Jan 2025 21:01:39 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"success\": false,\n    \"error\": \"Record not found\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Redirect to Target URL",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:54321/:shortId",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "54321",
+          "path": [":shortId"],
+          "variable": [
+            {
+              "key": "shortId",
+              "value": "Zx8lP5bWMhEgnvH"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "301",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:54321/:shortId",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "54321",
+              "path": [":shortId"],
+              "variable": [
+                {
+                  "key": "shortId",
+                  "value": "Zx8lP5bWMhEgnvH"
+                }
+              ]
+            }
+          },
+          "status": "Moved Permanently",
+          "code": 301,
+          "_postman_previewlanguage": "plain",
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Location",
+              "value": "https://www.youtube.com/"
+            },
+            {
+              "key": "Vary",
+              "value": "Accept"
+            },
+            {
+              "key": "Content-Type",
+              "value": "text/plain; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "58"
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 12 Jan 2025 21:12:25 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "Moved Permanently. Redirecting to https://www.youtube.com/"
+        },
+        {
+          "name": "404",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:54321/:shortId",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "54321",
+              "path": [":shortId"],
+              "variable": [
+                {
+                  "key": "shortId",
+                  "value": "non-existent-id"
+                }
+              ]
+            }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "44"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"2c-COXrBsUC7ZS13v8rjky4tG38o7c\""
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 12 Jan 2025 21:13:11 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"success\": false,\n    \"error\": \"Record not found\"\n}"
+        }
+      ]
+    }
+  ]
+}
