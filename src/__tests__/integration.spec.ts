@@ -38,8 +38,8 @@ describe('App Tests', () => {
     await mongoDBContainer.stop();
   });
 
-  describe('GET /links/:linkId', () => {
-    it('returns data when record is found', async () => {
+  describe('GET /links/:shortId', () => {
+    it('returns 200 when record is found', async () => {
       const serverModule = (await import('../server.ts')).app;
 
       await supertest(serverModule)
@@ -57,7 +57,7 @@ describe('App Tests', () => {
         });
     });
 
-    it('returns error when record is not found', async () => {
+    it('returns 404 when record is not found', async () => {
       const serverModule = (await import('../server.ts')).app;
 
       await supertest(serverModule)
@@ -73,7 +73,7 @@ describe('App Tests', () => {
   });
 
   describe('GET /:shortId', () => {
-    it('returns redirect when record is found', async () => {
+    it('returns 301 when record is found', async () => {
       const serverModule = (await import('../server.ts')).app;
 
       await supertest(serverModule)
@@ -84,7 +84,7 @@ describe('App Tests', () => {
         });
     });
 
-    it('returns error when record is not found', async () => {
+    it('returns 404 when record is not found', async () => {
       const serverModule = (await import('../server.ts')).app;
 
       await supertest(serverModule)
@@ -101,7 +101,7 @@ describe('App Tests', () => {
 
   describe('POST /links', () => {
     it('returns 201 whenever record created', async () => {
-      (nanoid as Mock).mockReturnValueOnce('bingo');
+      (nanoid as Mock).mockReturnValueOnce('another-fake-id');
       const serverModule = (await import('../server.ts')).app;
 
       await supertest(serverModule)
@@ -115,15 +115,14 @@ describe('App Tests', () => {
             success: true,
             data: {
               _id: expect.any(String),
-              shortId: expect.any(String),
+              shortId: 'another-fake-id',
               target: 'https://www.duckduckgo.com/',
             },
           });
         });
     });
 
-    it('returns 409 whenever URL is invalid', async () => {
-      (nanoid as Mock).mockReturnValueOnce('bingo');
+    it('returns 400 whenever URL is invalid', async () => {
       const serverModule = (await import('../server.ts')).app;
 
       await supertest(serverModule)
@@ -131,7 +130,7 @@ describe('App Tests', () => {
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
         .send({ target: 'bad-url' })
-        .expect(409)
+        .expect(400)
         .then((response) => {
           expect(response.body).toMatchObject({
             success: false,
