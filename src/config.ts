@@ -5,7 +5,7 @@ export const configSchema = z.object({
   MONGODB_URL: z.string(),
 });
 
-export let config;
+export let config: z.infer<typeof configSchema>;
 
 try {
   config = configSchema.parse(process.env);

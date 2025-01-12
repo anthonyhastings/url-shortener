@@ -1,15 +1,19 @@
-FROM node:20-alpine AS base
+FROM node:22-alpine AS base
 
 LABEL maintainer="Anthony Hastings <ar.hastings@gmail.com>"
+
+RUN corepack enable
 
 USER node
 
 WORKDIR /url-shortener
 
-COPY --chown=node ./package.json ./yarn.lock ./
+COPY --chown=node ./package.json ./pnpm-lock.yaml ./
 
-RUN yarn install --frozen-lockfile && yarn cache clean
+RUN corepack install
+
+RUN pnpm install --frozen-lockfile
 
 COPY --chown=node . ./
 
-CMD yarn start
+CMD pnpm start

@@ -1,22 +1,24 @@
 import path from 'node:path';
-import { jest } from '@jest/globals';
-import { MongoDBContainer } from '@testcontainers/mongodb';
+import {
+  MongoDBContainer,
+  type StartedMongoDBContainer,
+} from '@testcontainers/mongodb';
 import mongoose from 'mongoose';
+import { nanoid } from 'nanoid';
 import supertest from 'supertest';
+import { type Mock } from 'vitest';
 
-jest.unstable_mockModule('nanoid', async () => {
+vi.mock('nanoid', () => {
   return {
-    nanoid: jest.fn(() => 'fake-id'),
+    nanoid: vi.fn(() => 'fake-id'),
   };
 });
 
-const nanoId = (await import('nanoid')).nanoid;
-
 describe('App Tests', () => {
-  let mongoDBContainer;
+  let mongoDBContainer: StartedMongoDBContainer;
 
   beforeAll(async () => {
-    mongoDBContainer = await new MongoDBContainer('mongo:7')
+    mongoDBContainer = await new MongoDBContainer('mongo:8')
       .withCopyDirectoriesToContainer([
         {
           source: path.resolve(process.cwd(), './database/init/'),
@@ -28,7 +30,7 @@ describe('App Tests', () => {
     // Mongoose is using the docker hostname. This only works if the test code is running inside of docker.
     // ?directConnection solves this connection issue.
     process.env.MONGODB_URL = `${mongoDBContainer.getConnectionString()}/urlShortener?directConnection=true`;
-    process.env.APP_PORT = 5000;
+    process.env.APP_PORT = '5000';
   });
 
   afterAll(async () => {
@@ -36,9 +38,9 @@ describe('App Tests', () => {
     await mongoDBContainer.stop();
   });
 
-  describe('GET /links/:linkId', () => {
-    it('returns data when record is found', async () => {
-      const serverModule = (await import('../server.mjs')).app;
+  describe('GET /links/:shortId', () => {
+    it('returns 200 when record is found', async () => {
+      const serverModule = (await import('../server.ts')).app;
 
       await supertest(serverModule)
         .get('/links/Zx8lP5bWMhEgnvH')
@@ -55,8 +57,8 @@ describe('App Tests', () => {
         });
     });
 
-    it('returns error when record is not found', async () => {
-      const serverModule = (await import('../server.mjs')).app;
+    it('returns 404 when record is not found', async () => {
+      const serverModule = (await import('../server.ts')).app;
 
       await supertest(serverModule)
         .get('/links/fake-record')
@@ -71,8 +73,8 @@ describe('App Tests', () => {
   });
 
   describe('GET /:shortId', () => {
-    it('returns redirect when record is found', async () => {
-      const serverModule = (await import('../server.mjs')).app;
+    it('returns 301 when record is found', async () => {
+      const serverModule = (await import('../server.ts')).app;
 
       await supertest(serverModule)
         .get('/Zx8lP5bWMhEgnvH')
@@ -82,8 +84,8 @@ describe('App Tests', () => {
         });
     });
 
-    it('returns error when record is not found', async () => {
-      const serverModule = (await import('../server.mjs')).app;
+    it('returns 404 when record is not found', async () => {
+      const serverModule = (await import('../server.ts')).app;
 
       await supertest(serverModule)
         .get('/fake-record')
@@ -99,8 +101,8 @@ describe('App Tests', () => {
 
   describe('POST /links', () => {
     it('returns 201 whenever record created', async () => {
-      nanoId.mockReturnValueOnce('bingo');
-      const serverModule = (await import('../server.mjs')).app;
+      (nanoid as Mock).mockReturnValueOnce('another-fake-id');
+      const serverModule = (await import('../server.ts')).app;
 
       await supertest(serverModule)
         .post('/links')
@@ -113,23 +115,22 @@ describe('App Tests', () => {
             success: true,
             data: {
               _id: expect.any(String),
-              shortId: expect.any(String),
+              shortId: 'another-fake-id',
               target: 'https://www.duckduckgo.com/',
             },
           });
         });
     });
 
-    it('returns 409 whenever URL is invalid', async () => {
-      nanoId.mockReturnValueOnce('bingo');
-      const serverModule = (await import('../server.mjs')).app;
+    it('returns 400 whenever URL is invalid', async () => {
+      const serverModule = (await import('../server.ts')).app;
 
       await supertest(serverModule)
         .post('/links')
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
         .send({ target: 'bad-url' })
-        .expect(409)
+        .expect(400)
         .then((response) => {
           expect(response.body).toMatchObject({
             success: false,
@@ -139,8 +140,8 @@ describe('App Tests', () => {
     });
 
     it('returns 409 when Short ID already exists', async () => {
-      nanoId.mockReturnValueOnce('Zx8lP5bWMhEgnvH');
-      const serverModule = (await import('../server.mjs')).app;
+      (nanoid as Mock).mockReturnValueOnce('Zx8lP5bWMhEgnvH');
+      const serverModule = (await import('../server.ts')).app;
 
       await supertest(serverModule)
         .post('/links')

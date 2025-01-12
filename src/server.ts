@@ -2,9 +2,9 @@ import 'dotenv/config';
 import express from 'express';
 import mongoose from 'mongoose';
 import { nanoid } from 'nanoid';
-import { config } from './config.mjs';
-import { LinkModel } from './models/link.mjs';
-import { isValidHTTPURL } from './utils.mjs';
+import { config } from './config.ts';
+import { LinkModel } from './models/link.ts';
+import { isValidHTTPURL } from './utils.ts';
 
 mongoose.connection.once('open', () => {
   console.log('Connected to MongoDB');
@@ -15,10 +15,7 @@ mongoose.connection.once('disconnected', () => {
 });
 
 try {
-  await mongoose.connect(config.MONGODB_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  await mongoose.connect(config.MONGODB_URL);
 } catch (error) {
   console.log('Mongoose connection failed:', error);
   process.exit(1);
@@ -43,9 +40,8 @@ app.get('/links/:shortId', async (req, res) => {
 });
 
 app.post('/links', async (req, res) => {
-  const isValidTarget = isValidHTTPURL(req.body.target);
-  if (!isValidTarget) {
-    return res.status(409).json({ success: false, error: 'Invalid target' });
+  if (isValidHTTPURL(req.body.target) === false) {
+    return res.status(400).json({ success: false, error: 'Invalid target' });
   }
 
   const shortId = nanoid(25);

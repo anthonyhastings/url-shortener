@@ -14,17 +14,23 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v4
 
+      - name: Enable corepack
+        run: corepack enable
+
       - name: Set Node.js version
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          cache: 'yarn'
+          cache: 'pnpm'
 
       - name: Install application dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: pnpm install --prefer-offline --frozen-lockfile
 
       - name: Check formatting
-        run: yarn format:check
+        run: pnpm format:check
+
+      - name: Check types
+        run: pnpm types:check
 
       - name: Run integration tests
-        run: yarn test
+        run: pnpm test

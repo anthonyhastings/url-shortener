@@ -6,4 +6,5 @@
 !.prettierignore
 !.prettierrc
 !package.json
-!yarn.lock
+!pnpm-lock.yaml
+!vitest.config.ts
