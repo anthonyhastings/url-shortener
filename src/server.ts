@@ -40,9 +40,8 @@ app.get('/links/:shortId', async (req, res) => {
 });
 
 app.post('/links', async (req, res) => {
-  const isValidTarget = isValidHTTPURL(req.body.target);
-  if (!isValidTarget) {
-    return res.status(409).json({ success: false, error: 'Invalid target' });
+  if (isValidHTTPURL(req.body.target) === false) {
+    return res.status(400).json({ success: false, error: 'Invalid target' });
   }
 
   const shortId = nanoid(25);
