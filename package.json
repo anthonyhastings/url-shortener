@@ -6,15 +6,16 @@
   "author": "Anthony Hastings <ar.hastings@gmail.com> (https://antwan1986.github.io/)",
   "license": "MIT",
   "private": true,
-  "main": "src/index.mjs",
-  "module": "src/index.mjs",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
   "type": "module",
   "scripts": {
-    "dev": "node --watch src/index.mjs",
+    "dev": "node --experimental-strip-types --experimental-transform-types --watch src/index.ts",
     "format": "prettier --write .",
     "format:check": "prettier --list-different .",
-    "start": "node src/index.mjs",
-    "test": "DEBUG=testcontainers* vitest"
+    "start": "node --experimental-strip-types --experimental-transform-types src/index.ts",
+    "test": "DEBUG=testcontainers* vitest",
+    "types:check": "tsc --noEmit --project ./tsconfig.json"
   },
   "dependencies": {
     "dotenv": "^16.3.1",
@@ -25,8 +26,12 @@
   },
   "devDependencies": {
     "@testcontainers/mongodb": "^10.16.0",
+    "@types/supertest": "^6.0.2",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.10.5",
     "prettier": "^3.0.3",
     "supertest": "^7.0.0",
+    "typescript": "^5.7.3",
     "vitest": "^2.1.8"
   }
 }

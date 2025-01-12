@@ -1,8 +1,8 @@
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-  environment: 'node',
   test: {
+    environment: 'node',
     globals: true,
     hookTimeout: 40_000,
     poolOptions: {

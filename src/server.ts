@@ -2,9 +2,9 @@ import 'dotenv/config';
 import express from 'express';
 import mongoose from 'mongoose';
 import { nanoid } from 'nanoid';
-import { config } from './config.mjs';
-import { LinkModel } from './models/link.mjs';
-import { isValidHTTPURL } from './utils.mjs';
+import { config } from './config.ts';
+import { LinkModel } from './models/link.ts';
+import { isValidHTTPURL } from './utils.ts';
 
 mongoose.connection.once('open', () => {
   console.log('Connected to MongoDB');
