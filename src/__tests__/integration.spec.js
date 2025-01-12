@@ -15,7 +15,7 @@ describe('App Tests', () => {
   let mongoDBContainer;
 
   beforeAll(async () => {
-    mongoDBContainer = await new MongoDBContainer('mongo:7')
+    mongoDBContainer = await new MongoDBContainer('mongo:8')
       .withCopyDirectoriesToContainer([
         {
           source: path.resolve(process.cwd(), './database/init/'),

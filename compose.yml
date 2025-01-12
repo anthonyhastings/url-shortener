@@ -1,6 +1,6 @@
 services:
   database:
-    image: mongo:7
+    image: mongo:8
     ports:
       - 45678:27017
     environment:

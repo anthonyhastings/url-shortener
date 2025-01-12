@@ -15,10 +15,7 @@ mongoose.connection.once('disconnected', () => {
 });
 
 try {
-  await mongoose.connect(config.MONGODB_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  await mongoose.connect(config.MONGODB_URL);
 } catch (error) {
   console.log('Mongoose connection failed:', error);
   process.exit(1);
