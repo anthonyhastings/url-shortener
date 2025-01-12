@@ -14,7 +14,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --list-different .",
     "start": "node --experimental-strip-types --experimental-transform-types src/index.ts",
-    "test": "DEBUG=testcontainers* vitest",
+    "test": "DEBUG=testcontainers,testcontainers:exec vitest",
     "types:check": "tsc --noEmit --project ./tsconfig.json"
   },
   "dependencies": {
